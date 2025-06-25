@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户详情 - 蜡笔小新官方粉丝站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#333333',
+                        secondary: '#666666',
+                        accent: '#FF6B6B',
+                        yellow: '#FFE68B',
+                        light: '#FFF9E6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities { .content-auto { content-visibility: auto; } .border-all { @apply border-t border-r border-b border-l; } .image-container { @apply overflow-hidden relative; } .fit-image { @apply absolute inset-0 w-full h-full object-cover; } .tab-active
+        { @apply bg-primary text-white border-b-2 border-accent; } .page-transition { @apply transition-opacity duration-500 ease-in-out; } .profile-card { @apply transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl; } .btn-hover {
+        @apply transform transition-transform duration-300 hover:scale-105; } .animate-fade-in { animation: fadeIn 0.5s ease-in-out; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } }
+    </style>
+</head>
+
+<body class="bg-light font-sans">
+    <!-- 主容器 -->
+    <div class="container mx-auto p-4 md:p-6">
+        <!-- 顶部导航栏 -->
+        <div class="bg-yellow rounded-lg shadow-md border-all border-primary mb-6 p-2">
+            <div class="flex flex-wrap gap-2 justify-between items-center">
+                <a href="首页crb.html" class="flex items-center gap-2 text-primary hover:text-accent transition-colors duration-200">
+                    <i class="fa fa-arrow-left"></i>
+                    <span>返回首页</span>
+                </a>
+                <h1 class="text-xl md:text-2xl font-bold text-primary">用户详情</h1>
+                <div id="auth-container">
+                    <div id="user-profile" class="relative">
+                        <img id="user-avatar" src="https://picsum.photos/200/200?random=123" alt="用户头像" class="w-10 h-10 rounded-full cursor-pointer border border-primary">
+                        <div id="user-dropdown" class="hidden absolute right-0 mt-2 bg-white rounded-lg shadow-md border border-primary z-10 user-dropdown-animation">
+                            <div class="p-2 flex items-center">
+                                <a href="用户详情页crb.html"><i class="fa fa-user text-primary mr-2"></i>
+                                <span id="user-name">蜡笔小新的粉丝</span></a>
+                            </div>
+                            <div class="p-2 border-t border-gray-200 cursor-pointer hover:bg-light" onclick="logout()">
+                                <i class="fa fa-sign-out text-primary mr-2"></i>
+                                <span>退出登录</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 用户信息卡片 -->
+        <div class="bg-white rounded-lg shadow-md border-all border-primary mb-8 overflow-hidden">
+            <div class="p-6 md:p-8">
+                <div class="flex flex-col md:flex-row gap-6 items-center">
+                    <div class="relative">
+                        <div class="w-32 h-32 md:w-40 md:h-40 image-container rounded-full border-4 border-primary">
+                            <img src="https://picsum.photos/200/200?random=123" alt="用户头像" class="fit-image rounded-full">
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-accent text-white text-xs px-3 py-1 rounded-full border-2 border-white">
+                            <i class="fa fa-star mr-1"></i> 高级会员
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-2" id="userName"></h2>
+                        <p class="text-gray-600 mb-4">ID: CRB_19920505</p>
+                        <div class="flex flex-wrap gap-3 mb-6">
+                            <div class="flex items-center gap-1">
+                                <i class="fa fa-calendar text-primary"></i>
+                                <span class="text-sm text-gray-600">注册时间: 2023-07-15</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <i class="fa fa-user-circle text-primary"></i>
+                                <span class="text-sm text-gray-600">会员等级: Lv.5</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <i class="fa fa-comment text-primary"></i>
+                                <span class="text-sm text-gray-600">动态: 32条</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="资料编辑crb.html"><button class="btn-hover px-6 py-2 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                <i class="fa fa-edit mr-2"></i>编辑资料
+                            </button></a>
+                            <button class="btn-hover px-6 py-2 border border-primary rounded hover:bg-primary hover:text-white transition-colors duration-200">
+                                <i class="fa fa-share-alt mr-2"></i>分享主页
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-primary text-white p-4">
+                <p class="text-center">"最喜欢小新的搞怪和家人的温馨，每天必看一集蜡笔小新！"</p>
+            </div>
+        </div>
+
+        <!-- 选项卡导航 -->
+        <div class="bg-white rounded-lg shadow-md border-all border-primary mb-6 overflow-hidden">
+            <div class="flex border-b border-gray-300">
+                <button class="tab-btn tab-active px-6 py-3 text-center font-medium" data-tab="profile">
+                    个人资料
+                </button>
+                <button class="tab-btn px-6 py-3 text-center font-medium text-gray-600 hover:text-primary transition-colors duration-200" data-tab="favorites">
+                    我的收藏
+                </button>
+                <button class="tab-btn px-6 py-3 text-center font-medium text-gray-600 hover:text-primary transition-colors duration-200" data-tab="activity">
+                    互动记录
+                </button>
+            </div>
+        </div>
+
+        <!-- 选项卡内容区域 -->
+        <div id="tab-content" class="mb-8">
+            <!-- 个人资料选项卡 -->
+            <div id="profile-tab" class="tab-content page-transition animate-fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary p-6 profile-card">
+                        <h3 class="font-bold text-xl mb-4 text-primary flex items-center">
+                            <i class="fa fa-user-circle mr-2 text-accent"></i>基本信息
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-light rounded-full text-primary">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">昵称</p>
+                                    <p class="text-primary font-medium"><span id="username1"></span></p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-light rounded-full text-primary">
+                                    <i class="fa fa-birthday-cake"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">生日</p>
+                                    <p class="text-primary font-medium">1998-03-12</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-light rounded-full text-primary">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">所在地</p>
+                                    <p class="text-primary font-medium">上海市浦东新区</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-light rounded-full text-primary">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">邮箱</p>
+                                    <p class="text-primary font-medium">crb_xiaoxin@example.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-light rounded-full text-primary">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">电话</p>
+                                    <p class="text-primary font-medium">138****5678</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary p-6 profile-card md:col-span-2">
+                        <h3 class="font-bold text-xl mb-4 text-primary flex items-center">
+                            <i class="fa fa-heart mr-2 text-accent"></i>粉丝档案
+                        </h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                            <div class="bg-light p-4 rounded-lg border border-primary text-center">
+                                <div class="text-3xl font-bold text-primary mb-1">58</div>
+                                <div class="text-gray-700 text-sm">收藏角色</div>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-primary text-center">
+                                <div class="text-3xl font-bold text-primary mb-1">32</div>
+                                <div class="text-gray-700 text-sm">收藏美食</div>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-primary text-center">
+                                <div class="text-3xl font-bold text-primary mb-1">128</div>
+                                <div class="text-gray-700 text-sm">点赞数</div>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-primary text-center">
+                                <div class="text-3xl font-bold text-primary mb-1">64</div>
+                                <div class="text-gray-700 text-sm">评论数</div>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-lg mb-3 text-primary">我最喜欢的角色</h4>
+                        <div class="flex flex-wrap gap-3 mb-6">
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">野原新之助</span>
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">风间彻</span>
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">妮妮</span>
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">阿呆</span>
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">正南</span>
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">小山美伢</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-3 text-primary">我最喜欢的美食</h4>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">牛奶松饼</span>
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">野原家咖喱饭</span>
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">巧克力香蕉</span>
+                            <span class="bg-light border border-primary px-3 py-1 rounded text-sm">春日部草莓蛋糕</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md border-all border-primary p-6 mb-8 profile-card">
+                    <h3 class="font-bold text-xl mb-4 text-primary flex items-center">
+                        <i class="fa fa-book mr-2 text-accent"></i>我的粉丝故事
+                    </h3>
+                    <div class="prose max-w-none">
+                        <p class="text-gray-700 mb-4">第一次看蜡笔小新是在小学的时候，当时被小新的搞怪逗得哈哈大笑，没想到一追就是十几年。现在每次看蜡笔小新，不仅是为了开心，更多的是感受到家庭的温暖和生活的乐趣。</p>
+                        <p class="text-gray-700 mb-4">最喜欢的场景是小新和家人一起去海边的那一集，虽然过程中发生了很多搞笑的事情，但最后一家人围坐在篝火旁的画面特别温馨。这让我想起了自己和家人的旅行，充满了回忆。</p>
+                        <p class="text-gray-700">作为粉丝，我收集了很多蜡笔小新的周边，从盲盒到漫画书，还有各种联名商品。最珍贵的是一本签名版的漫画第一卷，那是我生日时朋友送的礼物，一直珍藏到现在。</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md border-all border-primary p-6 profile-card">
+                    <h3 class="font-bold text-xl mb-4 text-primary flex items-center">
+                        <i class="fa fa-comments mr-2 text-accent"></i>我的动态
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-accent pl-4 pb-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg">新剧场版制作决定！</h4>
+                                <span class="text-sm text-gray-500">2小时前</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">期待已久的蜡笔小新2025年剧场版终于要来了！不知道这次小新又会带来什么惊喜，已经开始期待年底的上映了！</p>
+                            <div class="flex gap-3">
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-thumbs-up"></i>
+                                    <span>28</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-comment"></i>
+                                    <span>5</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-share"></i>
+                                    <span>分享</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-primary pl-4 pb-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg">成功复刻牛奶松饼！</h4>
+                                <span class="text-sm text-gray-500">昨天</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">按照网站上的食谱尝试做了小新最爱的牛奶松饼，没想到意外的成功！口感松软，配上牛奶真的很好吃，推荐大家也试试~</p>
+                            <div class="grid grid-cols-3 gap-2 mt-3">
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/牛奶松饼.png" alt="牛奶松饼" class="fit-image">
+                                </div>
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/牛奶松饼制作过程1.png" alt="制作过程" class="fit-image">
+                                </div>
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/牛奶松饼制作过程2.png" alt="制作过程" class="fit-image">
+                                </div>
+                            </div>
+                            <div class="flex gap-3 mt-3">
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-thumbs-up"></i>
+                                    <span>45</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-comment"></i>
+                                    <span>12</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-share"></i>
+                                    <span>分享</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-secondary pl-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg">收到了新的蜡笔小新盲盒！</h4>
+                                <span class="text-sm text-gray-500">3天前</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">新入手的蜡笔小新x三丽鸥联名盲盒，抽到了最喜欢的小新和Hello Kitty的组合，太开心了！盲盒做工很精致，摆在家里超可爱~</p>
+                            <div class="h-32 image-container rounded-lg overflow-hidden mt-3">
+                                <img src="图片/三丽鸥联名盲盒.png" alt="盲盒" class="fit-image">
+                            </div>
+                            <div class="flex gap-3 mt-3">
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-thumbs-up"></i>
+                                    <span>62</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-comment"></i>
+                                    <span>18</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-gray-500 hover:text-accent transition-colors duration-200">
+                                    <i class="fa fa-share"></i>
+                                    <span>分享</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 我的收藏选项卡 -->
+            <div id="favorites-tab" class="tab-content page-transition hidden animate-fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-xl">收藏的角色</h3>
+                            <button class="text-primary hover:text-accent transition-colors duration-200">
+                                查看全部 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                                <div class="h-32 image-container image-flip">
+                                    <img src="图片/野原新之助.jpg" alt="野原新之助" class="fit-image">
+                                    <img src="图片/小新.jpg" alt="小新" class="fit-image absolute inset-0">
+                                </div>
+                                <div class="p-3 text-center">
+                                    <h4 class="font-bold">野原新之助</h4>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                                <div class="h-32 image-container image-flip">
+                                    <img src="图片/风间.png" alt="风间彻" class="fit-image">
+                                    <img src="图片/风间背面.jpg" alt="风间背面" class="fit-image absolute inset-0">
+                                </div>
+                                <div class="p-3 text-center">
+                                    <h4 class="font-bold">风间彻</h4>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                                <div class="h-32 image-container image-flip">
+                                    <img src="图片/妮妮.png" alt="妮妮" class="fit-image">
+                                    <img src="图片/妮妮背面.jpg" alt="妮妮背面" class="fit-image absolute inset-0">
+                                </div>
+                                <div class="p-3 text-center">
+                                    <h4 class="font-bold">妮妮</h4>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                                <div class="h-32 image-container image-flip">
+                                    <img src="图片/阿呆.png" alt="阿呆" class="fit-image">
+                                    <img src="图片/阿呆背面.jpg" alt="阿呆背面" class="fit-image absolute inset-0">
+                                </div>
+                                <div class="p-3 text-center">
+                                    <h4 class="font-bold">阿呆</h4>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                                <div class="h-32 image-container image-flip">
+                                    <img src="图片/正男.png" alt="正男" class="fit-image">
+                                    <img src="图片/正男背面.jpg" alt="正男背面" class="fit-image absolute inset-0">
+                                </div>
+                                <div class="p-3 text-center">
+                                    <h4 class="font-bold">正男</h4>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                                <div class="h-32 image-container image-flip">
+                                    <img src="图片/小山美伢.png" alt="美伢" class="fit-image">
+                                    <img src="图片/美伢背面.jpg" alt="美伢背面" class="fit-image absolute inset-0">
+                                </div>
+                                <div class="p-3 text-center">
+                                    <h4 class="font-bold">小山美伢</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-xl">收藏的美食</h3>
+                            <button class="text-primary hover:text-accent transition-colors duration-200">
+                                查看全部 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                                <div class="w-full md:w-1/4 h-28 image-container rounded-lg">
+                                    <img src="图片/牛奶松饼.png" alt="牛奶松饼" class="fit-image">
+                                </div>
+                                <div class="w-full md:w-3/4">
+                                    <h4 class="font-bold text-lg mb-1">牛奶松饼</h4>
+                                    <p class="text-sm text-gray-500 mb-2">新之助最爱的早餐，松软可口</p>
+                                    <p class="text-gray-700 mb-3">
+                                        收藏于 2024-05-10
+                                    </p>
+                                    <a href="牛奶松饼食谱crb.html"><button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200 text-sm">
+                                            查看食谱
+                                        </button></a>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                                <div class="w-full md:w-1/4 h-28 image-container rounded-lg">
+                                    <img src="图片/咖喱饭.png" alt="野原家咖喱饭" class="fit-image">
+                                </div>
+                                <div class="w-full md:w-3/4">
+                                    <h4 class="font-bold text-lg mb-1">野原家咖喱饭</h4>
+                                    <p class="text-sm text-gray-500 mb-2">野原家的家常便饭，香气四溢</p>
+                                    <p class="text-gray-700 mb-3">
+                                        收藏于 2024-06-15
+                                    </p>
+                                    <a href="咖喱饭crb.html"><button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200 text-sm">
+                                            查看食谱
+                                        </button></a>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                                <div class="w-full md:w-1/4 h-28 image-container rounded-lg">
+                                    <img src="图片/巧克力香蕉.png" alt="巧克力香蕉" class="fit-image">
+                                </div>
+                                <div class="w-full md:w-3/4">
+                                    <h4 class="font-bold text-lg mb-1">巧克力香蕉</h4>
+                                    <p class="text-sm text-gray-500 mb-2">新之助喜欢的甜点，美味又健康</p>
+                                    <p class="text-gray-700 mb-3">
+                                        收藏于 2024-07-22
+                                    </p>
+                                    <a href="巧克力香蕉crb.html"><button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200 text-sm">
+                                            查看食谱
+                                        </button></a>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                                <div class="w-full md:w-1/4 h-28 image-container rounded-lg">
+                                    <img src="图片/草莓蛋糕.png" alt="春日部草莓蛋糕" class="fit-image">
+                                </div>
+                                <div class="w-full md:w-3/4">
+                                    <h4 class="font-bold text-lg mb-1">春日部草莓蛋糕</h4>
+                                    <p class="text-sm text-gray-500 mb-2">模仿动漫中的草莓蛋糕，甜而不腻</p>
+                                    <p class="text-gray-700 mb-3">
+                                        收藏于 2024-08-05
+                                    </p>
+                                    <a href="像小葵一样香香软软的草莓蛋糕.html"><button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200 text-sm">
+                                            查看食谱
+                                        </button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md border-all border-primary p-6 profile-card">
+                    <h3 class="font-bold text-xl mb-4 text-primary flex items-center">
+                        <i class="fa fa-film mr-2 text-accent"></i>收藏的名场面
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container">
+                                <img src="https://picsum.photos/id/237/600/400" alt="屁屁舞" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">屁屁舞</h4>
+                                <p class="text-gray-700 mb-3">
+                                    新之助标志性的舞蹈，扭动屁股，配上搞笑的表情，成为了动漫中最经典的场景之一。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">第1季第5集</span>
+                                    <button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200 text-sm">
+                                            查看详情
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container">
+                                <img src="https://picsum.photos/id/26/600/400" alt="大象歌" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">大象歌</h4>
+                                <p class="text-gray-700 mb-3">
+                                    新之助经常唱的歌曲，歌词搞笑，配上滑稽的动作，让人忍俊不禁。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">第2季第12集</span>
+                                    <button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200 text-sm">
+                                            查看详情
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container">
+                                <img src="https://picsum.photos/id/364/600/400" alt="动感超人" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">动感超人</h4>
+                                <p class="text-gray-700 mb-3">
+                                    新之助最喜欢的英雄角色，他经常模仿动感超人的动作和台词。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">第3季第8集</span>
+                                    <button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200 text-sm">
+                                            查看详情
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 互动记录选项卡 -->
+            <div id="activity-tab" class="tab-content page-transition hidden animate-fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary p-6 profile-card">
+                        <h3 class="font-bold text-xl mb-4 text-primary flex items-center">
+                            <i class="fa fa-heart mr-2 text-accent"></i>我的点赞
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                                <div class="w-full md:w-1/4 h-28 image-container rounded-lg">
+                                    <img src="图片/剧场小白.jpg" alt="新剧场版" class="fit-image">
+                                </div>
+                                <div class="w-full md:w-3/4">
+                                    <h4 class="font-bold text-lg mb-1">蜡笔小新 2025剧场版制作决定！
+                                    </h4>
+                                    <p class="text-sm text-gray-500 mb-2">发布于 2025-06-10</p>
+                                    <p class="text-gray-700 mb-3">
+                                        官方宣布蜡笔小新2025年剧场版制作决定，预计年底上映！
+                                    </p>
+                                    <span class="text-xs bg-light px-2 py-1 rounded-full text-primary">
+                                        点赞于 2025-06-11
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                                <div class="w-full md:w-1/4 h-28 image-container rounded-lg">
+                                    <img src="图片/牛奶松饼.png" alt="牛奶松饼" class="fit-image">
+                                </div>
+                                <div class="w-full md:w-3/4">
+                                    <h4 class="font-bold text-lg mb-1">【食谱】正宗牛奶松饼的做法</h4>
+                                    <p class="text-sm text-gray-500 mb-2">发布于 2025-05-28</p>
+                                    <p class="text-gray-700 mb-3">
+                                        教你做出像动画里一样松软可口的牛奶松饼，简单易学！
+                                    </p>
+                                    <span class="text-xs bg-light px-2 py-1 rounded-full text-primary">
+                                        点赞于 2025-05-30
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                                <div class="w-full md:w-1/4 h-28 image-container rounded-lg">
+                                    <img src="图片/新之助.jpg" alt="野原新之助" class="fit-image">
+                                </div>
+                                <div class="w-full md:w-3/4">
+                                    <h4 class="font-bold text-lg mb-1">野原新之助经典台词大赏</h4>
+                                    <p class="text-sm text-gray-500 mb-2">发布于 2025-05-15</p>
+                                    <p class="text-gray-700 mb-3">
+                                        盘点新之助那些让人捧腹大笑的经典台词，你还记得多少？
+                                    </p>
+                                    <span class="text-xs bg-light px-2 py-1 rounded-full text-primary">
+                                        点赞于 2025-05-18
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary p-6 profile-card">
+                        <h3 class="font-bold text-xl mb-4 text-primary flex items-center">
+                            <i class="fa fa-comment mr-2 text-accent"></i>我的评论
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="font-bold text-lg">【食谱】正宗牛奶松饼的做法</h4>
+                                    <span class="text-sm text-gray-500">2025-05-30</span>
+                                </div>
+                                <p class="text-gray-700 mb-3 bg-light p-3 rounded-lg">
+                                    按照这个食谱做了，真的很成功！松饼很松软，牛奶的香味也很浓郁。我加了一些蓝莓，孩子很喜欢吃。谢谢分享这么好的食谱！
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">点赞数: 12</span>
+                                    <button class="text-primary hover:text-accent transition-colors duration-200 text-sm">
+                                        查看原帖
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="font-bold text-lg">蜡笔小新2025剧场版制作决定！</h4>
+                                    <span class="text-sm text-gray-500">2025-06-11</span>
+                                </div>
+                                <p class="text-gray-700 mb-3 bg-light p-3 rounded-lg">
+                                    太期待了！每年的剧场版都是年度必看，不知道这次小新又会有什么新的冒险。希望剧情能延续以往的搞笑和温馨，票房大卖！
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">点赞数: 8</span>
+                                    <button class="text-primary hover:text-accent transition-colors duration-200 text-sm">
+                                        查看原帖
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="profile-card bg-white rounded-lg shadow-md border-all border-primary p-4">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="font-bold text-lg">野原新之助经典台词大赏</h4>
+                                    <span class="text-sm text-gray-500">2025-05-18</span>
+                                </div>
+                                <p class="text-gray-700 mb-3 bg-light p-3 rounded-lg">
+                                    "妈妈，你回来了~" 这句台词每次听到都觉得特别温馨。小新虽然调皮，但对家人的爱真的很让人感动。最喜欢他和妈妈之间的互动了！
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">点赞数: 23</span>
+                                    <button class="text-primary hover:text-accent transition-colors duration-200 text-sm">
+                                        查看原帖
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md border-all border-primary p-6 profile-card">
+                    <h3 class="font-bold text-xl mb-4 text-primary flex items-center">
+                        <i class="fa fa-calendar mr-2 text-accent"></i>近期活动参与
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4 items-center">
+                            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold">
+                                06
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg mb-1">蜡笔小新粉丝创意大赛</h4>
+                                <p class="text-gray-700 mb-2">
+                                    我提交了一幅小新的画作，获得了优秀奖！感谢主办方提供的这次机会，让我能展示自己对小新的喜爱。
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="text-xs bg-light px-2 py-1 rounded-full text-primary">
+                                        参与时间: 2025-06-05
+                                    </span>
+                                    <span class="text-xs bg-accent px-2 py-1 rounded-full text-white">
+                                        获奖
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 items-center">
+                            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold">
+                                05
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg mb-1">春日部美食线上分享会</h4>
+                                <p class="text-gray-700 mb-2">
+                                    分享了我做的野原家咖喱饭，和其他粉丝交流了制作心得。看到大家对蜡笔小新的热爱，真的很开心！
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="text-xs bg-light px-2 py-1 rounded-full text-primary">
+                                        参与时间: 2025-05-20
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 items-center">
+                            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold">
+                                04
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-lg mb-1">蜡笔小新2024剧场版观影活动</h4>
+                                <p class="text-gray-700 mb-2">
+                                    和一群小新粉丝一起观看了最新剧场版，现场气氛非常热烈。大家一起欢笑，一起感动，这是一次难忘的观影体验。
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="text-xs bg-light px-2 py-1 rounded-full text-primary">
+                                        参与时间: 2025-04-15
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="bg-primary text-white py-6 rounded-lg shadow-md border-all border-primary">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">蜡笔小新官方粉丝站</h3>
+                        <p class="text-gray-300 mb-4">
+                            欢迎来到蜡笔小新的世界，这里有最新资讯、角色介绍、美食食谱等内容，让我们一起感受野原一家的欢乐生活！
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-white hover:text-yellow transition-colors duration-200">
+                                <i class="fa fa-weibo"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-yellow transition-colors duration-200">
+                                <i class="fa fa-wechat"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-yellow transition-colors duration-200">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-yellow transition-colors duration-200">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                        <ul class="space-y-2">
+                            <li><a href="首页crb.html" class="text-gray-300 hover:text-yellow transition-colors duration-200">首页</a></li>
+                            <li><a href="角色介绍crb.html" class="text-gray-300 hover:text-yellow transition-colors duration-200">角色介绍</a></li>
+                            <li><a href="美食食谱crb.html" class="text-gray-300 hover:text-yellow transition-colors duration-200">美食食谱</a></li>
+                            <li><a href="剧场版crb.html" class="text-gray-300 hover:text-yellow transition-colors duration-200">剧场版</a></li>
+                            <li><a href="周边产品crb.html" class="text-gray-300 hover:text-yellow transition-colors duration-200">周边产品</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">支持</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-300 hover:text-yellow transition-colors duration-200">常见问题</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow transition-colors duration-200">联系我们</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow transition-colors duration-200">隐私政策</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow transition-colors duration-200">使用条款</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">订阅最新资讯</h4>
+                        <p class="text-gray-300 mb-4">
+                            输入您的邮箱，获取蜡笔小新最新资讯和活动信息
+                        </p>
+                        <form class="mb-4">
+                            <div class="flex">
+                                <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-yellow text-primary w-full">
+                                <button type="submit" class="bg-yellow text-primary px-4 py-2 rounded-r-lg hover:bg-accent hover:text-white transition-colors duration-200">
+                                    订阅
+                                </button>
+                            </div>
+                        </form>
+                        <p class="text-gray-400 text-sm">
+                            我们尊重您的隐私，不会向第三方分享您的信息
+                        </p>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+                    <p>&copy; 2025 蜡笔小新官方粉丝站. 保留所有权利.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 scale-0 hover:scale-110 z-50">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // 监听localStorage变化
+        const userName = document.getElementById('userName');
+        userName.innerHTML = localStorage.getItem('currentUser') || '蜡笔小新的粉丝';
+        const userName1 = document.getElementById('userName1');
+        userName1.innerHTML = localStorage.getItem('currentUser') || '蜡笔小新的粉丝';
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'userInfo') {
+                try {
+                    const userInfo = JSON.parse(e.newValue);
+                    updateUserInfo(userInfo);
+                    console.log('用户信息已更新:', userInfo);
+                    showNotification('用户信息已更新');
+                } catch (error) {
+                    console.error('解析用户信息失败:', error);
+                }
+            }
+        });
+
+        // 更新用户信息显示
+        function updateUserInfo(userInfo) {
+            if (userInfo) {
+                // 更新导航栏用户信息
+                document.getElementById('username').textContent = userInfo.username || '蜡笔小新的粉丝';
+                document.getElementById('user-avatar').src = userInfo.avatar || 'https://picsum.photos/200/200?random=123';
+                document.getElementById('user-avatar').alt = userInfo.username || '用户头像';
+
+
+                // 更新用户详情页信息
+                const profileTab = document.getElementById('profile-tab');
+
+
+                if (profileTab) {
+                    profileTab.querySelector('h2').textContent = userInfo.username || '蜡笔小新的粉丝';
+                    profileTab.querySelector('.flex-1 > p').textContent = `ID: ${userInfo.userId || 'CRB_19920505'}`;
+
+                    // 更新基本信息
+                    const basicInfo = profileTab.querySelectorAll('.flex.items-start.gap-3');
+                    if (basicInfo.length >= 5) {
+                        basicInfo[0].querySelector('.text-primary').textContent = userInfo.username || '蜡笔小新的粉丝';
+                        basicInfo[1].querySelector('.text-primary').textContent = userInfo.birthday || '1998-03-12';
+                        basicInfo[2].querySelector('.text-primary').textContent = userInfo.location || '上海市浦东新区';
+                        basicInfo[3].querySelector('.text-primary').textContent = userInfo.email || 'crb_xiaoxin@example.com';
+                        basicInfo[4].querySelector('.text-primary').textContent = userInfo.phone || '138****5678';
+                    }
+                }
+            }
+        }
+
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-primary text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-fade-in';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 尝试从localStorage获取用户信息
+            try {
+                const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+                if (userInfo) {
+                    updateUserInfo(userInfo);
+                }
+            } catch (error) {
+                console.error('获取用户信息失败:', error);
+            }
+
+            // 选项卡切换
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 移除所有选项卡按钮的活动状态
+                    tabBtns.forEach(b => {
+                        b.classList.remove('tab-active');
+                        b.classList.add('text-gray-600');
+                    });
+
+                    // 添加当前按钮的活动状态
+                    btn.classList.add('tab-active');
+                    btn.classList.remove('text-gray-600');
+
+                    // 隐藏所有内容
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    // 显示对应内容
+                    const tabId = btn.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+                });
+            });
+
+            // 用户下拉菜单
+            const userProfile = document.getElementById('user-profile');
+            const userDropdown = document.getElementById('user-dropdown');
+
+            userProfile.addEventListener('click', () => {
+                userDropdown.classList.toggle('hidden');
+            });
+
+            // 点击其他地方关闭下拉菜单
+            document.addEventListener('click', (e) => {
+                if (!userProfile.contains(e.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+
+            // 退出登录
+            window.logout = function() {
+                localStorage.removeItem('userInfo');
+                updateUserInfo(null);
+                showNotification('您已成功退出登录');
+
+                // 这里可以添加跳转到登录页的逻辑
+                setTimeout(() => {
+                    window.location.href = '登录页crb.html';
+                }, 1000);
+            };
+
+            // 回到顶部按钮
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('scale-0');
+                    backToTopBtn.classList.add('scale-100');
+                } else {
+                    backToTopBtn.classList.remove('scale-100');
+                    backToTopBtn.classList.add('scale-0');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // 图片翻转效果
+            const imageContainers = document.querySelectorAll('.image-flip');
+            imageContainers.forEach(container => {
+                container.addEventListener('mouseenter', () => {
+                    const images = container.querySelectorAll('img');
+                    if (images.length > 1) {
+                        images[0].style.opacity = '0';
+                    }
+                });
+
+                container.addEventListener('mouseleave', () => {
+                    const images = container.querySelectorAll('img');
+                    if (images.length > 1) {
+                        images[0].style.opacity = '1';
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        // 监听消息事件
+        window.addEventListener('message', function(e) {
+            if (e.origin === window.location.origin && e.data.type === 'userInfoUpdated') {
+                updateUserInfo(e.data.data);
+                showNotification('用户信息已更新');
+            }
+        });
+    </script>
+</body>
+
+</html>

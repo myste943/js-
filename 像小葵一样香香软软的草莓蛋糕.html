@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>春日部草莓蛋糕 - 蜡笔小新官方粉丝站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#333333',
+                        secondary: '#666666',
+                        accent: '#FF6B6B',
+                        pink: '#FFB6C1',
+                        light: '#FFF9E6',
+                        strawberry: '#FF4560',
+                        cream: '#FFFDD0',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities { .content-auto { content-visibility: auto; } .border-all { @apply border-t border-r border-b border-l; } .btn-hover { @apply transform transition-transform duration-300 hover:scale-105; } .ingredient-item { @apply flex items-center gap-3
+        mb-3 p-3 rounded-lg border border-pink/30 hover:border-strawberry transition-colors; } .step-item { @apply mb-4 border border-pink/30 rounded-lg overflow-hidden; } .step-header { @apply flex justify-between items-center p-4 cursor-pointer bg-light
+        hover:bg-pink/10 transition-colors; } .step-content { @apply p-4 bg-white; } .strawberry-gradient { @apply bg-gradient-to-r from-pink to-strawberry; } .rating-star { @apply text-yellow-500; } }
+    </style>
+</head>
+
+<body class="bg-light font-sans">
+    <!-- 返回按钮 -->
+    <div class="fixed top-4 left-4 z-50">
+        <a href="javascript:history.back()" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white shadow-md hover:bg-accent transition-colors">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="container mx-auto p-4 md:p-6 max-w-5xl">
+        <!-- 顶部图片占位 -->
+        <div class="bg-white rounded-lg shadow-md border-all border-pink/30 mb-6 overflow-hidden">
+            <div class="h-64 md:h-80 bg-pink/10 flex items-center justify-center">
+                <div class="text-center">
+                    <i class="fa fa-birthday-cake text-6xl text-strawberry mb-3"></i>
+                    <h3 class="text-xl font-bold text-strawberry">春日部草莓蛋糕</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 食谱标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-primary mb-2">春日部草莓蛋糕</h1>
+            <p class="text-xl text-secondary">像小葵一样可爱的草莓蛋糕！</p>
+            <div class="flex justify-center gap-4 mt-4">
+                <div class="flex items-center">
+                    <i class="fa fa-clock-o text-strawberry mr-1"></i>
+                    <span>准备时间: 30分钟</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fa fa-fire text-strawberry mr-1"></i>
+                    <span>烘焙时间: 40分钟</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fa fa-users text-strawberry mr-1"></i>
+                    <span>份量: 6-8人份</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 左侧栏：食材和制作贴士 -->
+            <div class="lg:col-span-1 space-y-8">
+                <!-- 食材部分 -->
+                <div class="bg-white rounded-lg shadow-md border-all border-pink/30 overflow-hidden">
+                    <div class="strawberry-gradient text-white p-4">
+                        <h2 class="text-xl font-bold">食材清单</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <!-- 蛋糕部分 -->
+                            <div class="mb-6">
+                                <h3 class="font-bold text-lg text-strawberry mb-3">蛋糕体</h3>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">低筋面粉</h4>
+                                        <p class="text-sm text-gray-600">120克</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">鸡蛋</h4>
+                                        <p class="text-sm text-gray-600">5个（中等大小）</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">细砂糖</h4>
+                                        <p class="text-sm text-gray-600">100克（蛋白用）</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">细砂糖</h4>
+                                        <p class="text-sm text-gray-600">40克（蛋黄用）</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">牛奶</h4>
+                                        <p class="text-sm text-gray-600">60毫升</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">植物油</h4>
+                                        <p class="text-sm text-gray-600">50毫升</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">白醋或柠檬汁</h4>
+                                        <p class="text-sm text-gray-600">几滴</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 奶油部分 -->
+                            <div class="mb-6">
+                                <h3 class="font-bold text-lg text-strawberry mb-3">草莓奶油</h3>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">淡奶油</h4>
+                                        <p class="text-sm text-gray-600">300毫升</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">细砂糖</h4>
+                                        <p class="text-sm text-gray-600">40克</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">香草精</h4>
+                                        <p class="text-sm text-gray-600">几滴</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 装饰部分 -->
+                            <div>
+                                <h3 class="font-bold text-lg text-strawberry mb-3">装饰</h3>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">新鲜草莓</h4>
+                                        <p class="text-sm text-gray-600">250克</p>
+                                    </div>
+                                </div>
+                                <div class="ingredient-item">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">草莓果酱</h4>
+                                        <p class="text-sm text-gray-600">50克</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 小贴士 -->
+                <div class="bg-white rounded-lg shadow-md border-all border-pink/30 overflow-hidden">
+                    <div class="strawberry-gradient text-white p-4">
+                        <h2 class="text-xl font-bold">制作小贴士</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div class="text-accent text-xl mt-1">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">蛋白打发</h4>
+                                    <p class="text-gray-700">蛋白打发至湿性发泡，即提起打蛋器有小弯勾。过度打发会导致蛋糕开裂。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="text-accent text-xl mt-1">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">翻拌手法</h4>
+                                    <p class="text-gray-700">蛋黄糊和蛋白霜混合时，用切拌或翻拌手法，不要画圈搅拌，以免消泡。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="text-accent text-xl mt-1">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">奶油打发</h4>
+                                    <p class="text-gray-700">淡奶油打发前需冷藏12小时以上，打发时盆中可放些冰块保持低温。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="text-accent text-xl mt-1">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">草莓处理</h4>
+                                    <p class="text-gray-700">草莓洗净后需用厨房纸擦干水分，否则会影响奶油稳定性。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="text-accent text-xl mt-1">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">保存方法</h4>
+                                    <p class="text-gray-700">蛋糕需冷藏保存，食用前15分钟取出回温，口感更佳。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧栏：制作步骤、营养信息和评论区 -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- 制作步骤 -->
+                <div class="bg-white rounded-lg shadow-md border-all border-pink/30 overflow-hidden">
+                    <div class="strawberry-gradient text-white p-4">
+                        <h2 class="text-xl font-bold">制作步骤</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="step-item">
+                                <div class="step-header">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-pink/30 text-strawberry flex items-center justify-center mr-3">
+                                            1
+                                        </div>
+                                        <h4 class="font-bold">准备工作</h4>
+                                    </div>
+                                    <i class="fa fa-chevron-down text-strawberry transition-transform"></i>
+                                </div>
+                                <div class="step-content">
+                                    <p class="text-gray-700">将烤箱预热至150°C。准备一个8英寸圆形蛋糕模具，底部和侧面涂抹一层薄油，并铺上油纸。将鸡蛋分离，确保蛋白中不含蛋黄。</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-header">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-pink/30 text-strawberry flex items-center justify-center mr-3">
+                                            2
+                                        </div>
+                                        <h4 class="font-bold">制作蛋黄糊</h4>
+                                    </div>
+                                    <i class="fa fa-chevron-down text-strawberry transition-transform"></i>
+                                </div>
+                                <div class="step-content">
+                                    <p class="text-gray-700">在蛋黄中加入40克细砂糖，用打蛋器搅拌至稍微变白。加入牛奶和植物油，继续搅拌均匀。筛入低筋面粉，用橡皮刮刀翻拌成均匀的面糊。</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-header">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-pink/30 text-strawberry flex items-center justify-center mr-3">
+                                            3
+                                        </div>
+                                        <h4 class="font-bold">打发蛋白</h4>
+                                    </div>
+                                    <i class="fa fa-chevron-down text-strawberry transition-transform"></i>
+                                </div>
+                                <div class="step-content">
+                                    <p class="text-gray-700">在蛋白中滴入几滴白醋或柠檬汁，用打蛋器低速打发至出现鱼眼泡。分三次加入100克细砂糖，先低速搅拌，待糖溶解后转高速打发。打发至湿性发泡状态，即提起打蛋器有小弯勾。</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-header">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-pink/30 text-strawberry flex items-center justify-center mr-3">
+                                            4
+                                        </div>
+                                        <h4 class="font-bold">混合面糊</h4>
+                                    </div>
+                                    <i class="fa fa-chevron-down text-strawberry transition-transform"></i>
+                                </div>
+                                <div class="step-content">
+                                    <p class="text-gray-700">取三分之一的蛋白霜加入到蛋黄糊中，用橡皮刮刀翻拌均匀。然后将混合好的面糊倒回剩余的蛋白霜中，继续翻拌至完全均匀。</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-header">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-pink/30 text-strawberry flex items-center justify-center mr-3">
+                                            5
+                                        </div>
+                                        <h4 class="font-bold">烘烤蛋糕</h4>
+                                    </div>
+                                    <i class="fa fa-chevron-down text-strawberry transition-transform"></i>
+                                </div>
+                                <div class="step-content">
+                                    <p class="text-gray-700">将面糊倒入准备好的模具中，轻轻震出气泡。放入预热好的烤箱中，中层烘烤40-45分钟，直到牙签插入蛋糕中心拔出后没有残留物。</p>
+                                    <p class="text-gray-700 mt-2">烘烤完成后，取出蛋糕立即倒扣在冷却架上，完全冷却后再脱模。</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-header">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-pink/30 text-strawberry flex items-center justify-center mr-3">
+                                            6
+                                        </div>
+                                        <h4 class="font-bold">打发奶油</h4>
+                                    </div>
+                                    <i class="fa fa-chevron-down text-strawberry transition-transform"></i>
+                                </div>
+                                <div class="step-content">
+                                    <p class="text-gray-700">将冷藏过的淡奶油倒入干净的容器中，加入细砂糖和香草精。用打蛋器打发至硬性发泡状态，即提起打蛋器有挺立的尖角。</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-header">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-pink/30 text-strawberry flex items-center justify-center mr-3">
+                                            7
+                                        </div>
+                                        <h4 class="font-bold">组装蛋糕</h4>
+                                    </div>
+                                    <i class="fa fa-chevron-down text-strawberry transition-transform"></i>
+                                </div>
+                                <div class="step-content">
+                                    <p class="text-gray-700">将冷却好的蛋糕横切成两片或三片。取一片蛋糕放在蛋糕盘上，均匀地涂抹一层草莓果酱，再铺上一层打发的奶油。将洗净擦干的草莓对半切开，均匀地铺在奶油上。</p>
+                                    <p class="text-gray-700 mt-2">重复上述步骤，依次叠加蛋糕片、果酱、奶油和草莓，直到所有材料用完。最后一层用奶油覆盖整个蛋糕表面，并将边缘整理整齐。</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-header">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-pink/30 text-strawberry flex items-center justify-center mr-3">
+                                            8
+                                        </div>
+                                        <h4 class="font-bold">装饰蛋糕</h4>
+                                    </div>
+                                    <i class="fa fa-chevron-down text-strawberry transition-transform"></i>
+                                </div>
+                                <div class="step-content">
+                                    <p class="text-gray-700">将剩余的草莓切成适当大小，装饰在蛋糕表面。可以根据个人喜好，用奶油挤出花纹或用草莓酱画出图案。</p>
+                                    <p class="text-gray-700 mt-2">将装饰好的蛋糕放入冰箱冷藏至少2小时，让奶油更加紧实，口感更好。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 营养信息 -->
+                <div class="bg-white rounded-lg shadow-md border-all border-pink/30 overflow-hidden">
+                    <div class="strawberry-gradient text-white p-4">
+                        <h2 class="text-xl font-bold">营养信息</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-light p-4 rounded-lg border border-pink/30 text-center">
+                                <div class="text-2xl font-bold text-strawberry mb-1">480</div>
+                                <div class="text-sm text-gray-700">卡路里</div>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-pink/30 text-center">
+                                <div class="text-2xl font-bold text-strawberry mb-1">6g</div>
+                                <div class="text-sm text-gray-700">蛋白质</div>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-pink/30 text-center">
+                                <div class="text-2xl font-bold text-strawberry mb-1">58g</div>
+                                <div class="text-sm text-gray-700">碳水化合物</div>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-pink/30 text-center">
+                                <div class="text-2xl font-bold text-strawberry mb-1">25g</div>
+                                <div class="text-sm text-gray-700">脂肪</div>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-gray-700">
+                            <p>每份春日部草莓蛋糕（约100g）的营养成分参考值，根据实际食材用量可能会有所不同。</p>
+                            <p class="mt-2">草莓富含维生素C和纤维素，奶油和鸡蛋提供优质蛋白质，但糖分和脂肪含量较高，建议适量食用。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 评论区 -->
+                <div class="bg-white rounded-lg shadow-md border-all border-pink/30 overflow-hidden">
+                    <div class="strawberry-gradient text-white p-4">
+                        <h2 class="text-xl font-bold">评论区</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h3 class="font-bold text-lg mb-3">发表评论</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <textarea id="commentText" placeholder="分享你的制作心得或提问..." class="w-full p-3 border border-pink/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-strawberry transition-shadow"></textarea>
+                                </div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-sm text-gray-700">评分：</span>
+                                    <div class="flex text-yellow-500">
+                                        <i class="fa fa-star cursor-pointer hover:text-yellow-600 transition-colors rating-star"></i>
+                                        <i class="fa fa-star cursor-pointer hover:text-yellow-600 transition-colors rating-star"></i>
+                                        <i class="fa fa-star cursor-pointer hover:text-yellow-600 transition-colors rating-star"></i>
+                                        <i class="fa fa-star-o cursor-pointer hover:text-yellow-600 transition-colors rating-star"></i>
+                                        <i class="fa fa-star-o cursor-pointer hover:text-yellow-600 transition-colors rating-star"></i>
+                                    </div>
+                                </div>
+                                <button id="submitComment" class="btn-hover w-full bg-primary text-white py-2 rounded hover:bg-strawberry transition-colors">
+                                    提交评论
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="commentsList" class="space-y-4">
+                            <div class="border-b border-gray-200 pb-4">
+                                <div class="flex items-center mb-2">
+                                    <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry mr-3">
+                                        <span class="font-bold">新</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">野原新之助</h4>
+                                        <div class="flex text-yellow-500 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-half-o"></i>
+                                        </div>
+                                    </div>
+                                    <span class="ml-auto text-sm text-gray-500">2天前</span>
+                                </div>
+                                <p class="text-gray-700">蛋糕超级好吃！我偷偷吃了好几口，妈妈都没发现！草莓的甜味和奶油的香味完美结合，小葵肯定会喜欢的！</p>
+                            </div>
+                            <div class="border-b border-gray-200 pb-4">
+                                <div class="flex items-center mb-2">
+                                    <img src="https://picsum.photos/id/1027/40/40" alt="用户头像" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <h4 class="font-bold">美冴</h4>
+                                        <div class="flex text-yellow-500 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <span class="ml-auto text-sm text-gray-500">5天前</span>
+                                </div>
+                                <p class="text-gray-700">按照这个食谱做了，非常成功！蛋糕很松软，奶油也很细腻。我用了有机草莓，味道更加鲜美。小新吃得停不下来，下次还会再做！</p>
+                            </div>
+                            <div class="border-b border-gray-200 pb-4">
+                                <div class="flex items-center mb-2">
+                                    <img src="https://picsum.photos/id/1062/40/40" alt="用户头像" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <h4 class="font-bold">风间彻</h4>
+                                        <div class="flex text-yellow-500 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                    </div>
+                                    <span class="ml-auto text-sm text-gray-500">1周前</span>
+                                </div>
+                                <p class="text-gray-700">第一次做蛋糕，没想到这么成功！虽然过程有点复杂，但按照步骤来还是很容易的。蛋糕口感很好，就是奶油有点化了，可能是打发时间不够。下次会改进！</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-center">
+                            <button class="btn-hover px-4 py-2 border border-pink/30 rounded hover:bg-strawberry hover:text-white transition-colors">
+                                查看更多评论
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 步骤展开/折叠功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const stepHeaders = document.querySelectorAll('.step-header');
+
+            stepHeaders.forEach(header => {
+                // 默认展开第一个步骤
+                if (header === stepHeaders[0]) {
+                    header.querySelector('i').classList.add('rotate-180');
+                } else {
+                    const content = header.nextElementSibling;
+                    content.style.display = 'none';
+                }
+
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+
+                    if (content.style.display === 'none') {
+                        content.style.display = 'block';
+                        icon.classList.add('rotate-180');
+                    } else {
+                        content.style.display = 'none';
+                        icon.classList.remove('rotate-180');
+                    }
+                });
+            });
+
+            // 评分功能
+            const ratingStars = document.querySelectorAll('.rating-star');
+            let rating = 3; // 默认3星
+
+            ratingStars.forEach((star, index) => {
+                star.addEventListener('mouseover', function() {
+                    highlightStars(index + 1);
+                });
+
+                star.addEventListener('mouseout', function() {
+                    highlightStars(rating);
+                });
+
+                star.addEventListener('click', function() {
+                    rating = index + 1;
+                    highlightStars(rating);
+                });
+            });
+
+            function highlightStars(count) {
+                ratingStars.forEach((star, index) => {
+                    if (index < count) {
+                        star.classList.remove('fa-star-o');
+                        star.classList.add('fa-star');
+                    } else {
+                        star.classList.remove('fa-star');
+                        star.classList.add('fa-star-o');
+                    }
+                });
+            }
+
+            // 提交评论功能
+            const submitBtn = document.getElementById('submitComment');
+            const commentText = document.getElementById('commentText');
+            const commentsList = document.getElementById('commentsList');
+
+            submitBtn.addEventListener('click', function() {
+                const comment = commentText.value.trim();
+
+                if (comment === '') {
+                    alert('请输入评论内容！');
+                    return;
+                }
+
+                // 创建新评论元素
+                const newComment = document.createElement('div');
+                newComment.className = 'border-b border-gray-200 pb-4';
+
+                // 获取当前日期
+                const now = new Date();
+                const dateString = now.toLocaleDateString('zh-CN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+
+                // 设置评论内容
+                newComment.innerHTML = `
+                    <div class="flex items-center mb-2">
+                        <div class="w-10 h-10 rounded-full bg-pink/30 flex items-center justify-center text-strawberry mr-3">
+                            <span class="font-bold">你</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">你</h4>
+                            <div class="flex text-yellow-500 text-sm">
+                                ${generateRatingStars(rating)}
+                            </div>
+                        </div>
+                        <span class="ml-auto text-sm text-gray-500">刚刚</span>
+                    </div>
+                    <p class="text-gray-700">${comment}</p>
+                `;
+
+                // 添加到评论列表顶部
+                commentsList.insertBefore(newComment, commentsList.firstChild);
+
+                // 清空输入框
+                commentText.value = '';
+
+                // 滚动到新评论
+                setTimeout(() => {
+                    newComment.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            });
+
+            // 生成评分星星HTML
+            function generateRatingStars(count) {
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    stars += i <= count ?
+                        '<i class="fa fa-star"></i>' :
+                        '<i class="fa fa-star-o"></i>';
+                }
+                return stars;
+            }
+        });
+    </script>
+</body>
+
+</html>

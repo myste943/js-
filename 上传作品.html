@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜡笔小新 - 作品上传</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#333333',
+                        secondary: '#666666',
+                        accent: '#FF6B6B',
+                        yellow: '#FFE68B',
+                        light: '#FFF9E6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities { .content-auto { content-visibility: auto; } .border-all { @apply border-t border-r border-b border-l; } .btn-hover { @apply transform transition-transform duration-300 hover:scale-105; } .input-focus { @apply focus:ring-2 focus:ring-accent
+        focus:border-accent focus:outline-none; } .card-shadow { @apply shadow-md hover:shadow-xl transition-shadow duration-300; } }
+    </style>
+</head>
+
+<body class="bg-light font-sans min-h-screen flex flex-col">
+    <!-- 返回按钮 -->
+    <div class="container mx-auto p-4 md:p-6">
+        <a href="首页crb.html" class="inline-flex items-center mb-4 text-primary hover:text-accent transition-colors duration-200">
+            <i class="fa fa-arrow-left mr-2"></i> 返回首页
+        </a>
+
+        <!-- 上传标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">上传你的创作</h1>
+            <p class="text-gray-600">分享你对《蜡笔小新》的热爱与创意</p>
+        </div>
+
+        <!-- 上传表单卡片 -->
+        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden mb-8">
+            <div class="p-6 md:p-8">
+                <form id="uploadForm" class="space-y-6">
+                    <!-- 作品类型选择 -->
+                    <div>
+                        <label for="workType" class="block text-sm font-medium text-gray-700 mb-1">作品类型</label>
+                        <select id="workType" name="workType" class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus">
+                            <option value="">请选择作品类型</option>
+                            <option value="art">绘画/插画</option>
+                            <option value="cosplay">角色扮演</option>
+                            <option value="video">视频创作</option>
+                            <option value="fanfic">同人小说</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+
+                    <!-- 作品标题 -->
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-1">作品标题</label>
+                        <input type="text" id="title" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus" placeholder="请输入作品标题">
+                    </div>
+
+                    <!-- 作品描述 -->
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">作品描述</label>
+                        <textarea id="description" name="description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus" placeholder="请简要描述你的作品..."></textarea>
+                    </div>
+
+                    <!-- 文件上传区域 -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">上传作品文件</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-accent transition-colors duration-200 cursor-pointer" id="fileDropArea">
+                            <input type="file" id="fileInput" class="hidden" multiple>
+                            <i class="fa fa-cloud-upload text-4xl text-gray-400 mb-4"></i>
+                            <p class="text-gray-500 mb-2">点击或拖拽文件到此处上传</p>
+                            <p class="text-xs text-gray-400">支持 JPG, PNG, GIF, MP4, PDF 格式，单个文件不超过20MB</p>
+                            <div id="previewContainer" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
+                        </div>
+                    </div>
+
+                    <!-- 附加信息 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="character" class="block text-sm font-medium text-gray-700 mb-1">相关角色</label>
+                            <input type="text" id="character" name="character" class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus" placeholder="例如：野原新之助, 美伢">
+                        </div>
+                        <div>
+                            <label for="tags" class="block text-sm font-medium text-gray-700 mb-1">标签（用逗号分隔）</label>
+                            <input type="text" id="tags" name="tags" class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus" placeholder="例如：搞笑, 同人, 温馨">
+                        </div>
+                    </div>
+
+                    <!-- 作者信息 -->
+                    <div class="bg-light p-4 rounded-lg">
+                        <h3 class="font-bold text-lg mb-3">作者信息</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="authorName" class="block text-sm font-medium text-gray-700 mb-1">昵称</label>
+                                <input type="text" id="authorName" name="authorName" class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus" placeholder="请输入你的昵称">
+                            </div>
+                            <div>
+                                <label for="contact" class="block text-sm font-medium text-gray-700 mb-1">联系方式（选填）</label>
+                                <input type="text" id="contact" name="contact" class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus" placeholder="例如：邮箱或社交媒体账号">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 同意条款 -->
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input id="terms" name="terms" type="checkbox" class="focus:ring-accent h-4 w-4 text-accent border-gray-300 rounded">
+                        </div>
+                        <div class="ml-3 text-sm">
+                            <label for="terms" class="text-gray-600">我同意上传的作品符合社区规定，并且授予本站非独家展示权</label>
+                        </div>
+                    </div>
+
+                    <!-- 提交按钮 -->
+                    <div class="flex justify-center pt-4">
+                        <button type="submit" id="submitBtn" class="btn-hover px-8 py-3 bg-primary text-white rounded-lg hover:bg-accent transition-colors duration-200 flex items-center">
+                            <i class="fa fa-paper-plane mr-2"></i> 提交作品
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 上传提示 -->
+        <div class="bg-light border border-primary rounded-lg p-4 mb-8">
+            <h3 class="font-bold text-lg mb-2 flex items-center">
+                <i class="fa fa-info-circle text-primary mr-2"></i> 上传提示
+            </h3>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                <li>请确保上传的作品为原创或已获得版权许可</li>
+                <li>禁止上传包含色情、暴力、政治敏感内容的作品</li>
+                <li>我们会在24小时内审核您的作品，审核通过后将在网站展示</li>
+                <li>如有疑问，请联系管理员</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-xl font-bold mb-2">蜡笔小新官方粉丝站</h2>
+                    <p class="text-gray-300 text-sm">© 2025 蜡笔小新粉丝站 版权所有</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">
+                        <i class="fa fa-weibo text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">
+                        <i class="fa fa-wechat text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">
+                        <i class="fa fa-bilibili text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">
+                        <i class="fa fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 文件上传区域交互
+            const fileDropArea = document.getElementById('fileDropArea');
+            const fileInput = document.getElementById('fileInput');
+            const previewContainer = document.getElementById('previewContainer');
+
+            // 点击上传区域触发文件选择
+            fileDropArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // 文件选择变化时处理预览
+            fileInput.addEventListener('change', handleFileSelect);
+
+            // 拖放功能
+            fileDropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileDropArea.classList.add('border-accent');
+                fileDropArea.classList.add('bg-yellow/20');
+            });
+
+            fileDropArea.addEventListener('dragleave', () => {
+                fileDropArea.classList.remove('border-accent');
+                fileDropArea.classList.remove('bg-yellow/20');
+            });
+
+            fileDropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileDropArea.classList.remove('border-accent');
+                fileDropArea.classList.remove('bg-yellow/20');
+
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileSelect();
+                }
+            });
+
+            // 处理文件选择
+            function handleFileSelect() {
+                const files = fileInput.files;
+                if (!files.length) return;
+
+                previewContainer.innerHTML = '';
+
+                // 显示前5个文件预览
+                Array.from(files).slice(0, 5).forEach((file, index) => {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'relative';
+
+                    // 检查是否为图片
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.className = 'w-full h-20 object-cover rounded border border-gray-200';
+                        img.src = URL.createObjectURL(file);
+                        img.alt = `预览图 ${index + 1}`;
+                        previewItem.appendChild(img);
+                    } else {
+                        // 非图片文件显示图标
+                        const iconContainer = document.createElement('div');
+                        iconContainer.className = 'w-full h-20 flex items-center justify-center bg-gray-100 rounded border border-gray-200';
+
+                        const icon = document.createElement('i');
+                        icon.className = 'fa fa-file-text-o text-gray-400 text-2xl';
+
+                        const fileName = document.createElement('p');
+                        fileName.className = 'text-xs text-gray-500 mt-1 text-center';
+                        fileName.textContent = file.name.length > 10 ?
+                            file.name.substring(0, 7) + '...' + file.name.split('.').pop() :
+                            file.name;
+
+                        iconContainer.appendChild(icon);
+                        previewItem.appendChild(iconContainer);
+                        previewItem.appendChild(fileName);
+                    }
+
+                    // 添加删除按钮
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'absolute -top-2 -right-2 bg-accent text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-primary transition-colors duration-200';
+                    removeBtn.innerHTML = '<i class="fa fa-times"></i>';
+                    removeBtn.onclick = function() {
+                        removeFile(index);
+                    };
+
+                    previewItem.appendChild(removeBtn);
+                    previewContainer.appendChild(previewItem);
+                });
+
+                // 如果文件超过5个，显示提示
+                if (files.length > 5) {
+                    const moreFiles = document.createElement('div');
+                    moreFiles.className = 'flex items-center justify-center h-20 bg-gray-100 rounded border border-gray-200 text-gray-500 text-sm';
+                    moreFiles.innerHTML = `<i class="fa fa-ellipsis-h mr-2"></i> 还有 ${files.length - 5} 个文件`;
+                    previewContainer.appendChild(moreFiles);
+                }
+            }
+
+            // 移除文件
+            function removeFile(index) {
+                const files = Array.from(fileInput.files);
+                files.splice(index, 1);
+
+                // 创建新的FileList
+                const dataTransfer = new DataTransfer();
+                files.forEach(file => dataTransfer.items.add(file));
+
+                fileInput.files = dataTransfer.files;
+                handleFileSelect();
+            }
+
+            // 表单提交处理
+            const uploadForm = document.getElementById('uploadForm');
+            const submitBtn = document.getElementById('submitBtn');
+
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // 简单表单验证
+                const workType = document.getElementById('workType').value;
+                const title = document.getElementById('title').value;
+                const description = document.getElementById('description').value;
+                const authorName = document.getElementById('authorName').value;
+                const terms = document.getElementById('terms').checked;
+
+                if (!workType || !title || !description || !authorName || !terms) {
+                    alert('请填写所有必填字段并同意条款');
+                    return;
+                }
+
+                if (fileInput.files.length === 0) {
+                    alert('请上传至少一个文件');
+                    return;
+                }
+
+                // 显示提交中状态
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 提交中...';
+
+                // 模拟上传过程
+                setTimeout(() => {
+                    alert('作品提交成功！我们会尽快审核您的作品。');
+                    uploadForm.reset();
+                    previewContainer.innerHTML = '';
+
+
+                    // 返回首页
+                    window.location.href = '首页crb.html';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+
+</html>

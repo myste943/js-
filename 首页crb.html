@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜡笔小新 - 官方粉丝站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#333333',
+                        secondary: '#666666',
+                        accent: '#FF6B6B',
+                        yellow: '#FFE68B',
+                        light: '#FFF9E6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities { .content-auto { content-visibility: auto; } .border-all { @apply border-t border-r border-b border-l; } .image-container { @apply overflow-hidden relative; } .fit-image { @apply absolute inset-0 w-full h-full object-cover; } .nav-active
+        { @apply bg-primary text-white; } .page-transition { @apply transition-opacity duration-500 ease-in-out; } .character-card { @apply transform transition-all duration-300 hover:scale-105 hover:shadow-xl; } .btn-hover { @apply transform transition-transform
+        duration-300 hover:scale-105; } .user-dropdown-animation { @apply transition-all duration-300 ease-in-out; } } .image-flip { transform-style: preserve-3d; /* 启用3D变换 */ transition: transform 0.6s ease; /* 翻转过渡效果，0.6秒缓动 */ position: relative; /*
+        确保子元素定位正确 */ } .image-flip img { backface-visibility: hidden; /* 关键：设置背面可见性 */ transition: all 0.6s; } .image-flip img:nth-child(2) { transform: rotateY(180deg); /* 第二张图片初始旋转180度 */ } .image-flip:hover img:nth-child(1) { transform: rotateY(180deg);
+        /* 悬停时第一张图片旋转 */ } .image-flip:hover img:nth-child(2) { transform: rotateY(0); /* 悬停时第二张图片恢复正向 */ } .slideshow-container { position: relative; width: 100%; height: 250px; /* 调整高度 */ overflow: hidden; } .slide { position: absolute; width: 100%;
+        height: 100%; opacity: 0; transition: opacity 1s ease-in-out; } .slide.active { opacity: 1; }
+
+    </style>
+</head>
+
+<body class="bg-light font-sans">
+    <!-- 主容器 -->
+    <div class="container mx-auto p-4 md:p-6">
+        <!-- 顶部大图片区域 -->
+        <div class="bg-white rounded-lg shadow-md border-all border-primary mb-6 overflow-hidden">
+            <div class="h-64 md:h-80 image-container">
+                <img src="图片/大图.wmf" alt="蜡笔小新动漫海报" class="fit-image">
+            </div>
+        </div>
+
+        <!-- 导航栏区域 -->
+        <div class="bg-yellow rounded-lg shadow-md border-all border-primary mb-6 p-2">
+            <div class="flex flex-wrap gap-2 justify-center md:justify-between">
+                <button class="nav-btn px-4 py-2 border border-primary rounded hover:bg-primary hover:text-white transition-colors duration-200 nav-active" data-page="home">
+                    <i class="fa fa-home mr-1"></i> 首页
+                </button>
+                <button class="nav-btn px-4 py-2 border border-primary rounded hover:bg-primary hover:text-white transition-colors duration-200" data-page="characters">
+                    剧情人物
+                </button>
+                <button class="nav-btn px-4 py-2 border border-primary rounded hover:bg-primary hover:text-white transition-colors duration-200" data-page="influence">
+                    动漫影响力
+                </button>
+                <button class="nav-btn px-4 py-2 border border-primary rounded hover:bg-primary hover:text-white transition-colors duration-200" data-page="food">
+                    动漫美食复刻
+                </button>
+                <button class="nav-btn px-4 py-2 border border-primary rounded hover:bg-primary hover:text-white transition-colors duration-200" data-page="scenes">
+                    名场面
+                </button>
+                <!-- 登录按钮与头像容器 -->
+                <div id="auth-container">
+                    <a href="登录crb.html" id="login-btn">
+                        <button class="px-4 py-2 border border-primary rounded hover:bg-primary hover:text-white transition-colors duration-200">
+                            <i class="fa fa-user mr-1"></i> 登录
+                        </button>
+                    </a>
+                    <!-- 头像与下拉菜单（默认隐藏） -->
+                    <div id="user-profile" class="hidden relative">
+                        <img id="user-avatar" src="https://picsum.photos/200/200?random=1" alt="用户头像" class="w-8 h-8 rounded-full cursor-pointer border border-primary">
+                        <div id="user-dropdown" class="hidden absolute right-0 mt-2 bg-white rounded-lg shadow-md border border-primary z-10 user-dropdown-animation">
+                            <div class="p-2 flex items-center">
+                                <a href="用户详情页crb.html"><i class="fa fa-user text-primary mr-2"></i>
+                                <span id="user-name">用户昵称</span></a>
+                            </div>
+                            <div class="p-2 border-t border-gray-200 cursor-pointer hover:bg-light" onclick="logout()">
+                                <i class="fa fa-sign-out text-primary mr-2"></i>
+                                <span>退出登录</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新内容区域 -->
+        <div id="content-area" class="mb-8">
+            <!-- 首页内容 -->
+            <div id="home-page" class="page-content page-transition">
+                <!-- 欢迎横幅 -->
+                <div class="bg-primary text-white p-6 rounded-lg mb-6 text-center">
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2">欢迎来到蜡笔小新官方粉丝站</h1>
+                    <p class="text-lg opacity-90">探索野原新之助和他的家人朋友的精彩世界</p>
+                </div>
+
+                <!-- 特色内容 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="h-48 image-container">
+                            <img src="图片/五人图.png" alt="最新剧集" class="fit-image">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-xl mb-2">最新剧集</h3>
+                            <p class="text-gray-700 mb-3">
+                                第1000集将于本月底播出！新之助又将带来怎样的搞笑故事呢？让我们一起期待！
+                            </p>
+                            <a href="https://v.qq.com/x/cover/nsgczu8u2kvpe9e/s0016uzzh4e.html"><button class="btn-hover px-4 py-2 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                查看详情
+                            </button></a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="h-48 image-container">
+                            <img src="图片/介绍图.png" alt="周边" class="fit-image">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-xl mb-2">蜡笔小新周边</h3>
+                            <p class="text-gray-700 mb-3">
+                                蜡笔小新周边盲盒正在热销中！快来收集你最爱的角色吧！
+                            </p>
+                            <a href="https://uland.taobao.com/sem/tbsearch?bc_fl_src=tbsite_T9W2LtnM&channelSrp=bingSomama&clk1=5d1c414b24969cae9d52817adfaa72e5&commend=all&ie=utf8&initiative_id=tbindexz_20170306&keyword=%E8%9C%A1%E7%AC%94%E5%B0%8F%E6%96%B0%E5%8D%A1%E6%B8%B8&localImgKey=&msclkid=9ad26179e3fa14893b8e092bed719914&page=1&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E8%9C%A1%E7%AC%94%E5%B0%8F%E6%96%B0%E5%8D%A1%E6%B8%B8&refpid=mm_2898300158_3078300397_115665800437&search_type=item&sourceId=tb.index&spm=tbpc.pc_sem_alimama%2Fa.search_manual.0&ssid=s5-e&tab=all"><button class="btn-hover px-4 py-2 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                前往购买
+                            </button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 热门角色 -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="inline-block px-6 py-1 border-all border-primary rounded-full text-primary font-bold">
+                            热门角色
+                        </div>
+                        <button class="nav-btn text-primary hover:text-accent transition-colors duration-200" data-page="characters">查看全部</button>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container image-flip">
+                                <img src="图片/野原新之助.jpg" alt="野原新之助" class="fit-image">
+                                <img src="图片/小新.jpg" alt="小新" class="fit-image absolute inset-0">
+                            </div>
+                            <div class="p-3 text-center">
+                                <h4 class="font-bold">野原新之助</h4>
+                            </div>
+                        </div>
+
+                        <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container image-flip">
+                                <img src="图片/美伢.png" alt="美伢" class="fit-image">
+                                <img src="图片/美伢背面.jpg" alt="美伢背面" class="fit-image absolute inset-0">
+                            </div>
+                            <div class="p-3 text-center">
+                                <h4 class="font-bold">小山美伢</h4>
+                            </div>
+                        </div>
+
+                        <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container image-flip">
+                                <img src="图片/野原广志.jpg" alt="野原广志" class="fit-image">
+                                <img src="图片/野原广志背面.jpg" alt="野原广志背面" class="fit-image absolute inset-0">
+                            </div>
+                            <div class="p-3 text-center">
+                                <h4 class="font-bold">野原广志</h4>
+                            </div>
+                        </div>
+
+                        <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container image-flip">
+                                <img src="图片/小白.png" alt="小白" class="fit-image">
+                                <img src="图片/小白背面.jpg" alt="小白背面" class="fit-image absolute inset-0">
+                            </div>
+                            <div class="p-3 text-center">
+                                <h4 class="font-bold">小白</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 最新消息 -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="inline-block px-6 py-1 border-all border-primary rounded-full text-primary font-bold">
+                            最新消息
+                        </div>
+                        <button class="nav-btn text-primary hover:text-accent transition-colors duration-200" data-page="scenes">查看全部</button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                            <div class="w-full md:w-1/4 h-32 image-container rounded-lg">
+                                <img src="图片/剧场小白.jpg" alt="新剧场版" class="fit-image">
+                            </div>
+                            <div class="w-full md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">蜡笔小新2025剧场版制作决定！</h3>
+                                <p class="text-sm text-gray-500 mb-2">发布于 2025年6月10日</p>
+                                <p class="text-gray-700">
+                                    官方宣布蜡笔小新2025年剧场版正在制作中，预计将于年底上映。这将是系列的第30部剧场版作品...
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary p-4 flex flex-col md:flex-row gap-4">
+                            <div class="w-full md:w-1/4 h-32 image-container rounded-lg">
+                                <img src="图片/三丽鸥联名.jpg" alt="联名活动" class="fit-image">
+                            </div>
+                            <div class="w-full md:w-3/4">
+                                <h3 class="font-bold text-lg mb-1">蜡笔小新x三丽鸥联名商品发售</h3>
+                                <p class="text-sm text-gray-500 mb-2">发布于 2025年6月5日</p>
+                                <p class="text-gray-700">
+                                    蜡笔小新与三丽鸥的联名商品将于6月20日正式发售，包括文具、服饰、家居用品等多种周边...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 剧情人物内容 -->
+            <div id="characters-page" class="page-content page-transition hidden">
+                <!-- 标题 -->
+                <div class="flex justify-center mb-4">
+                    <div class="inline-block px-6 py-1 border-all border-primary rounded-full text-primary font-bold">
+                        剧情人物
+                    </div>
+                </div>
+
+                <!-- 角色列表 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 阿呆 -->
+                    <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="h-64 image-container">
+                            <img src="图片/阿呆.png" alt="阿呆" class="fit-image">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold text-xl">阿呆</h3>
+                                <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">重要角色</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                阿呆是《蜡笔小新》中的重要角色之一，性格温和内向，常被小新捉弄但依然是好朋友
+                            </p>
+                            <div class="flex gap-2">
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">幼稚园学生</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">外表呆滞</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">手工全能</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 妮妮 -->
+                    <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="h-64 image-container">
+                            <img src="图片/妮妮.png" alt="妮妮" class="fit-image">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold text-xl">妮妮</h3>
+                                <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">重要角色</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                妮妮（佐藤忍）是《蜡笔小新》中的重要角色之一，性格傲娇且富有想象力，常组织伙伴们玩 "超真实扮家家酒"
+                            </p>
+                            <div class="flex gap-2">
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">春日部成员</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">超真实扮家家酒</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 正男 -->
+                    <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="h-64 image-container">
+                            <img src="图片/正男.png" alt="正男" class="fit-image">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold text-xl">正男</h3>
+                                <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">重要角色</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                佐藤正男，性格胆小爱哭且贪玩，但也纯真善良，他最大的愿望是世界和平，梦想是成为一名漫画家。
+                            </p>
+                            <div class="flex gap-2">
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">贪玩</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">善良</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">有想象力</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 野原向日葵 -->
+                    <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="h-64 image-container">
+                            <img src="图片/野原向日葵.jpg" alt="野原向日葵" class="fit-image">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold text-xl">野原向日葵</h3>
+                                <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">妹妹</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                新之助的妹妹，还在襁褓中。虽然年纪小，但非常聪明，喜欢玩玩具和看电视。
+                            </p>
+                            <div class="flex gap-2">
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">喜欢帅哥</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">蜘蛛侠</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 小爱 -->
+                    <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="h-64 image-container">
+                            <img src="图片/小爱.png" alt="小爱" class="fit-image">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold text-xl">小爱</h3>
+                                <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">重要角色</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                小爱作为《蜡笔小新》中的人气配角，以夸张的富豪设定和傲娇反差萌为作品增添了许多喜剧效果。她的成长线也展现了 “金钱买不到友情” 的主题，让这个角色在搞笑之外更具深度
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="不是哥们你真想傍上富婆啊？.html"><span class="bg-light border border-primary px-2 py-1 rounded text-sm">富婆</span></a>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">喜欢小新</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">单纯</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 风间彻 -->
+                    <div class="character-card bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="h-64 image-container">
+                            <img src="图片/风间.png" alt="风间彻" class="fit-image">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold text-xl">风间彻</h3>
+                                <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">重要角色</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                新之助的朋友，性格内向，非常爱干净，是个完美主义者。虽然经常被新之助捉弄，但还是很喜欢和他一起玩。
+                            </p>
+                            <div class="flex gap-2">
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">魔法少女可爱p</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">富哥</span>
+                                <span class="bg-light border border-primary px-2 py-1 rounded text-sm">洁癖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动漫影响力内容 -->
+            <div id="influence-page" class="page-content page-transition hidden">
+                <!-- 标题 -->
+                <div class="flex justify-center mb-4">
+                    <div class="inline-block px-6 py-1 border-all border-primary rounded-full text-primary font-bold">
+                        动漫影响力
+                    </div>
+                </div>
+
+                <!-- 内容 -->
+                <div class="space-y-6">
+                    <!-- 全球人气 -->
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div id="main" class="w-full h-80 bg-white rounded-lg shadow-md border-all border-primary"></div>
+
+
+
+
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-2xl mb-3">全球人气</h3>
+                        <p class="text-gray-700 mb-4">
+                            《蜡笔小新》自1992年播出以来，在全球范围内都受到了广泛的欢迎，被翻译成多种语言，在多个国家和地区播出。
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div class="bg-light p-4 rounded-lg border border-primary">
+                                <div class="text-3xl font-bold text-primary mb-1">30+</div>
+                                <div class="text-gray-700">国家和地区播出</div>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-primary">
+                                <div class="text-3xl font-bold text-primary mb-1">500+</div>
+                                <div class="text-gray-700">动画剧集</div>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-primary">
+                                <div class="text-3xl font-bold text-primary mb-1">25+</div>
+                                <div class="text-gray-700">剧场版电影</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">
+                            除了日本本土，《蜡笔小新》在亚洲、欧洲、美洲等地区都拥有大量粉丝，成为了日本动漫文化的重要代表之一。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 文化影响 -->
+                <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                    <div class="slideshow-container">
+                        <img src="图片/轮换图5.png" class="slide active" alt="社会意义1">
+                        <img src="图片/轮换图6.jpg" class="slide" alt="社会意义2">
+                        <img src="图片/轮换图7.png" class="slide" alt="社会意义3">
+                        <img src="图片/轮换图8.png" class="slide" alt="社会意义4">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-2xl mb-3">文化影响</h3>
+                        <p class="text-gray-700 mb-4">
+                            动漫中的角色形象和台词已经成为了日本文化的一部分，甚至影响了日本的流行文化和社会现象。
+                        </p>
+                        <div class="space-y-4 mb-4">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-yellow text-primary p-2 rounded-full">
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">角色形象</h4>
+                                    <p class="text-gray-700">
+                                        野原新之助的形象被广泛应用于各种商品，从文具、玩具到服装、食品等，成为了日本最具代表性的动漫角色之一。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="bg-yellow text-primary p-2 rounded-full">
+                                    <i class="fa fa-quote-left"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">经典台词</h4>
+                                    <p class="text-gray-700">
+                                        动漫中的一些台词，如"大象~大象~"、"动感光波~哔哔哔~"等，已经成为了日本社会中的流行语，被广泛使用。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="bg-yellow text-primary p-2 rounded-full">
+                                    <i class="fa fa-music"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">音乐影响</h4>
+                                    <p class="text-gray-700">
+                                        动漫的主题曲和插曲深受观众喜爱，其中一些歌曲甚至成为了经典，被多次翻唱和改编。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">
+                            《蜡笔小新》不仅是一部动漫作品，更是一种文化现象，对日本和全球的流行文化产生了深远的影响。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 社会意义 -->
+                <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                    <div class="slideshow-container">
+                        <img src="图片/轮换图1.png" class="slide active" alt="社会意义1">
+                        <img src="图片/轮换图2.png" class="slide" alt="社会意义2">
+                        <img src="图片/轮换图3.png" class="slide" alt="社会意义3">
+                        <img src="图片/轮换图4.png" class="slide" alt="社会意义4">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-2xl mb-3">社会意义</h3>
+                        <p class="text-gray-700 mb-4">
+                            虽然是一部搞笑动漫，但也反映了现代社会中的一些问题和现象，如家庭关系、教育问题、社会压力等，引发了观众的思考。
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="bg-light p-4 rounded-lg border border-primary">
+                                <h4 class="font-bold text-lg mb-2">家庭关系</h4>
+                                <p class="text-gray-700">
+                                    动漫通过野原一家的日常生活，展现了现代家庭中的各种问题和挑战，同时也强调了家庭的重要性和温暖。
+                                </p>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-primary">
+                                <h4 class="font-bold text-lg mb-2">儿童教育</h4>
+                                <p class="text-gray-700">
+                                    新之助的行为和想法反映了儿童的天性和需求，引发了人们对儿童教育方式的思考和讨论。
+                                </p>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-primary">
+                                <h4 class="font-bold text-lg mb-2">社会压力</h4>
+                                <p class="text-gray-700">
+                                    通过广志等角色的工作和生活，反映了现代社会中人们面临的各种压力和挑战，以及如何应对这些压力。
+                                </p>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg border border-primary">
+                                <h4 class="font-bold text-lg mb-2">性别角色</h4>
+                                <p class="text-gray-700">
+                                    动漫中对传统性别角色的挑战和反思，也引发了人们对性别平等的思考和讨论。
+                                </p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">
+                            《蜡笔小新》以幽默诙谐的方式揭示了社会现实，让观众在欢笑中思考人生，这也是它能够长期受到欢迎的重要原因之一。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 动漫美食复刻内容 -->
+        <div id="food-page" class="page-content page-transition hidden">
+            <!-- 标题 -->
+            <div class="flex justify-center mb-4">
+                <div class="inline-block px-6 py-1 border-all border-primary rounded-full text-primary font-bold">
+                    动漫美食复刻
+                </div>
+            </div>
+
+            <!-- 内容 -->
+            <div class="space-y-8">
+                <!-- 精选美食 -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-xl">精选美食</h3>
+
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- 牛奶松饼 -->
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden transform transition-all duration-300 hover:shadow-xl">
+                            <div class="h-48 image-container">
+                                <img src="图片/牛奶松饼.png" alt="牛奶松饼" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-bold text-lg">牛奶松饼</h4>
+                                    <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">简单</span>
+                                </div>
+                                <p class="text-gray-700 mb-3">
+                                    新之助最爱的早餐，松软的松饼配上浓郁的牛奶，简单又美味。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <i class="fa fa-clock-o text-primary mr-1"></i>
+                                        <span class="text-sm text-gray-600">30分钟</span>
+                                    </div>
+                                    <a href="牛奶松饼食谱crb.html"><button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                            查看食谱
+                                        </button></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 咖喱饭 -->
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden transform transition-all duration-300 hover:shadow-xl">
+                            <div class="h-48 image-container">
+                                <img src="图片/咖喱饭.png" alt="咖喱饭" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-bold text-lg">野原家咖喱饭</h4>
+                                    <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">中等</span>
+                                </div>
+                                <p class="text-gray-700 mb-3">
+                                    野原家的家常便饭，香气四溢，配上嫩滑的牛肉和蔬菜，让人食欲大增。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <i class="fa fa-clock-o text-primary mr-1"></i>
+                                        <span class="text-sm text-gray-600">60分钟</span>
+                                    </div>
+                                    <a href="咖喱饭crb.html"><button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                            查看食谱
+                                        </button></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 巧克力香蕉 -->
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden transform transition-all duration-300 hover:shadow-xl">
+                            <div class="h-48 image-container">
+                                <img src="图片/巧克力香蕉.png" alt="巧克力香蕉" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-bold text-lg">巧克力香蕉</h4>
+                                    <span class="bg-yellow text-primary px-2 py-1 rounded-full text-sm">简单</span>
+                                </div>
+                                <p class="text-gray-700 mb-3">
+                                    新之助喜欢的甜点，香蕉裹上巧克力，再撒上一些坚果，美味又健康。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <i class="fa fa-clock-o text-primary mr-1"></i>
+                                        <span class="text-sm text-gray-600">20分钟</span>
+                                    </div>
+                                    <a href="巧克力香蕉crb.html"><button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                            查看食谱
+                                        </button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 本周推荐 -->
+                <div>
+                    <h3 class="font-bold text-xl mb-4">本周推荐</h3>
+
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-3">
+                            <div class="md:col-span-2 h-64 md:h-auto image-container">
+                                <img src="图片/草莓蛋糕.png" alt="草莓蛋糕" class="fit-image">
+                            </div>
+                            <div class="p-6 flex flex-col justify-center">
+                                <div class="flex items-center mb-2">
+                                    <span class="bg-accent text-white px-2 py-1 rounded-full text-sm mr-2">推荐</span>
+                                    <h4 class="font-bold text-xl">春日部草莓蛋糕</h4>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    模仿《蜡笔小新》中出现的草莓蛋糕制作，松软的蛋糕体配上新鲜的草莓和奶油，口感丰富，甜而不腻。
+                                </p>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="flex items-center">
+                                        <i class="fa fa-clock-o text-primary mr-1"></i>
+                                        <span class="text-sm text-gray-600">90分钟</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fa fa-cutlery text-primary mr-1"></i>
+                                        <span class="text-sm text-gray-600">6人份</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fa fa-signal text-primary mr-1"></i>
+                                        <span class="text-sm text-gray-600">中等难度</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fa fa-star text-yellow-500 mr-1"></i>
+                                        <span class="text-sm text-gray-600">4.8分</span>
+                                    </div>
+                                </div>
+                                <a href="像小葵一样香香软软的草莓蛋糕.html"><button class="btn-hover px-4 py-2 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                        详细食谱
+                                    </button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 美食视频 -->
+                <div>
+                    <h3 class="font-bold text-xl mb-4">美食制作视频</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-48 image-container relative">
+                                <a href="牛奶松饼视频.mp4" target="_blank"><img src="图片/牛奶松饼封面.jpg" alt="牛奶松饼制作视频" class="fit-image">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="bg-primary/70 text-white p-4 rounded-full">
+                                            <i class="fa fa-play"></i>
+                                        </div>
+                                </a>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-1">牛奶松饼制作教程</h4>
+                                <p class="text-sm text-gray-500">
+                                    <i class="fa fa-clock-o mr-1"></i> 12:45 · 120万次观看
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-48 image-container relative">
+                                <a href="咖喱饭.MP4"><img src="图片/咖喱饭封面.jpg" alt="野原家咖喱饭制作视频" class="fit-image">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="bg-primary/70 text-white p-4 rounded-full">
+                                            <i class="fa fa-play"></i>
+                                        </div>
+                                </a>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-1">野原家咖喱饭制作教程</h4>
+                                <p class="text-sm text-gray-500">
+                                    <i class="fa fa-clock-o mr-1"></i> 18:30 · 85万次观看
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 名场面内容 -->
+        <div id="scenes-page" class="page-content page-transition hidden">
+            <!-- 标题 -->
+            <div class="flex justify-center mb-4">
+                <div class="inline-block px-6 py-1 border-all border-primary rounded-full text-primary font-bold">
+                    名场面
+                </div>
+            </div>
+
+            <!-- 内容 -->
+            <div class="space-y-8">
+                <!-- 经典场景 -->
+                <div>
+                    <h3 class="font-bold text-xl mb-4">经典场景</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- 屁屁舞 -->
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden transform transition-all duration-300 hover:shadow-xl">
+                            <div class="h-64 image-container">
+                                <img src="图片/屁屁舞.gif" alt="屁屁舞" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">屁屁舞</h4>
+                                <p class="text-gray-700 mb-3">
+                                    新之助标志性的舞蹈，扭动屁股，配上搞笑的表情，成为了动漫中最经典的场景之一。这个舞蹈也成为了粉丝们最喜欢模仿的动作。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-light border border-primary px-2 py-1 rounded text-sm">第1季第5集</span>
+                                        <span class="bg-light border border-primary px-2 py-1 rounded text-sm">搞笑</span>
+                                    </div>
+                                    <button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                            查看详情
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 大象歌 -->
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden transform transition-all duration-300 hover:shadow-xl">
+                            <div class="h-64 image-container">
+                                <img src="图片/大象歌.jpg" alt="大象歌" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">大象歌</h4>
+                                <p class="text-gray-700 mb-3">
+                                    新之助经常唱的歌曲，歌词搞笑，配上滑稽的动作，让人忍俊不禁。这首歌也成为了《蜡笔小新》的代表性曲目之一。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-light border border-primary px-2 py-1 rounded text-sm">第2季第12集</span>
+                                        <span class="bg-light border border-primary px-2 py-1 rounded text-sm">音乐</span>
+                                    </div>
+                                    <button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                            查看详情
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 动感超人 -->
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden transform transition-all duration-300 hover:shadow-xl">
+                            <div class="h-64 image-container">
+                                <img src="图片/动感超人.jpg" alt="动感超人" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">动感超人</h4>
+                                <p class="text-gray-700 mb-3">
+                                    新之助最喜欢的英雄角色，他经常模仿动感超人的动作和台词。动感超人也成为了《蜡笔小新》中一个重要的元素。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-light border border-primary px-2 py-1 rounded text-sm">第3季第8集</span>
+                                        <span class="bg-light border border-primary px-2 py-1 rounded text-sm">英雄</span>
+                                    </div>
+                                    <button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                            查看详情
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 新之助与娜娜子 -->
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden transform transition-all duration-300 hover:shadow-xl">
+                            <div class="h-64 image-container">
+                                <img src="图片/娜娜子.jpg" alt="新之助与娜娜子" class="fit-image">
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">新之助与娜娜子</h4>
+                                <p class="text-gray-700 mb-3">
+                                    新之助对娜娜子姐姐有着特殊的感情，经常试图接近她，但总是以搞笑的方式失败。这对组合也成为了动漫中的一大看点。
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-light border border-primary px-2 py-1 rounded text-sm">第1季第15集</span>
+                                        <span class="bg-light border border-primary px-2 py-1 rounded text-sm">搞笑</span>
+                                    </div>
+                                    <button class="btn-hover px-3 py-1 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                            查看详情
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 热门视频 -->
+                <div>
+                    <h3 class="font-bold text-xl mb-4">热门视频</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container relative">
+                                <a href="https://www.bilibili.com/video/BV1U44y1u7C4/?vd_source=260cac04892ff1ab06f852470effe5ef"> <img src="图片/名场面1.jpg" alt="新之助经典场面合集" class="fit-image">
+                                    <div class="absolute bottom-2 right-2 bg-primary/80 text-white px-2 py-1 rounded text-xs">
+                                        2:00
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="p-3">
+                                <h4 class="font-bold text-sm mb-1">新之助经典场面合集</h4>
+                                <p class="text-xs text-gray-500">
+                                    <i class="fa fa-eye mr-1"></i> 320万次观看
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container relative">
+                                <a href="https://www.bilibili.com/video/BV1XV4y1N7ZW/?vd_source=260cac04892ff1ab06f852470effe5ef"><img src="图片/名场面2.jpg" alt="小新与家人的温馨时刻" class="fit-image">
+                                    <div class="absolute bottom-2 right-2 bg-primary/80 text-white px-2 py-1 rounded text-xs">
+                                        1:35
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="p-3">
+                                <h4 class="font-bold text-sm mb-1">小新与家人的温馨时刻</h4>
+                                <p class="text-xs text-gray-500">
+                                    <i class="fa fa-eye mr-1"></i> 210万次观看
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-md border-all border-primary overflow-hidden">
+                            <div class="h-40 image-container relative">
+                                <a href="https://www.bilibili.com/video/BV1LrZ2YyEvy/"><img src="图片/名场面3.jpg" alt="动感超人特别篇" class="fit-image">
+                                    <div class="absolute bottom-2 right-2 bg-primary/80 text-white px-2 py-1 rounded text-xs">
+                                        4:43
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="p-3">
+                                <h4 class="font-bold text-sm mb-1">动感超人特别篇</h4>
+                                <p class="text-xs text-gray-500">
+                                    <i class="fa fa-eye mr-1"></i> 180万次观看
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 粉丝创作 -->
+                <div>
+                    <h3 class="font-bold text-xl mb-4">粉丝创作</h3>
+
+                    <div class="bg-white rounded-lg shadow-md border-all border-primary p-6">
+                        <p class="text-gray-700 mb-4">
+                            你也可以创作自己的《蜡笔小新》名场面！上传你的作品，有机会在我们的官方网站上展示。
+                        </p>
+                        <div class="flex flex-col md:flex-row gap-4 items-center">
+                            <div class="w-full md:w-1/3 bg-light border-2 border-dashed border-primary rounded-lg p-8 text-center">
+                                <i class="fa fa-upload text-4xl text-primary mb-2"></i>
+                                <p class="text-gray-700">点击上传你的创作</p>
+                                <a href="上传作品.html"><button class="mt-3 px-4 py-2 bg-primary text-white rounded hover:bg-accent transition-colors duration-200">
+                                        上传作品
+                                    </button></a>
+                            </div>
+                            <div class="w-full md:w-2/3 grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/作品1.jpeg" alt="粉丝创作1" class="fit-image">
+                                </div>
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/作品2.webp" alt="粉丝创作2" class="fit-image">
+                                </div>
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/作品3.webp" alt="粉丝创作3" class="fit-image">
+                                </div>
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/作品4.webp" alt="粉丝创作4" class="fit-image">
+                                </div>
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/作品5.jpg" alt="粉丝创作5" class="fit-image">
+                                </div>
+                                <div class="h-24 image-container rounded-lg overflow-hidden">
+                                    <img src="图片/作品6.jpg" alt="粉丝创作6" class="fit-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // 获取所有导航按钮
+        const navButtons = document.querySelectorAll('.nav-btn');
+
+        // 获取所有页面内容
+        const pageContents = document.querySelectorAll('.page-content');
+
+        // 为导航按钮添加点击事件
+        navButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 获取目标页面ID
+                const targetPage = this.getAttribute('data-page');
+
+                // 隐藏所有页面内容并添加过渡效果
+                pageContents.forEach(page => {
+                    page.classList.add('opacity-0');
+                    setTimeout(() => {
+                        page.classList.add('hidden');
+                    }, 300);
+                });
+
+                // 移除所有按钮的活动状态和临时样式
+                navButtons.forEach(btn => {
+                    btn.classList.remove('nav-active', 'bg-primary', 'text-white');
+                });
+
+                // 显示目标页面内容
+                setTimeout(() => {
+                    document.getElementById(`${targetPage}-page`).classList.remove('hidden');
+                    setTimeout(() => {
+                        document.getElementById(`${targetPage}-page`).classList.remove('opacity-0');
+                    }, 50);
+                }, 300);
+
+                // 为当前按钮添加活动状态和临时样式
+                this.classList.add('nav-active', 'bg-primary', 'text-white');
+                setTimeout(() => {
+                    // 如果按钮仍然是活动状态，则保留样式，否则移除临时样式
+                    if (!this.classList.contains('nav-active')) {
+                        this.classList.remove('bg-primary', 'text-white');
+                    }
+                }, 300);
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script>
+        function initECharts() {
+            try {
+                // 获取图表容器元素
+                const chartContainer = document.getElementById('main');
+
+                // 检查容器是否存在
+                if (chartContainer) {
+                    // 初始化ECharts实例
+                    const myChart = echarts.init(chartContainer);
+
+                    // 定义图表配置
+                    const option = {
+                        title: {
+                            text: '蜡笔小新全球人气趋势（电影）',
+                            left: 'center',
+                            textStyle: {
+                                color: '#333333',
+                                fontSize: 16
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            borderColor: '#333333',
+                            borderWidth: 1,
+                            textStyle: {
+                                color: '#333333'
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: ['2015', '2016', '2021', '2022', '2023', '2024'],
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#333333'
+                                }
+                            },
+                            axisLabel: {
+                                color: '#666666'
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#333333'
+                                }
+                            },
+                            axisLabel: {
+                                color: '#666666'
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: '#EEEEEE'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '人气指数',
+                            data: [22.25, 24.8, 17.7, 20.2, 49.2, 26.12],
+                            type: 'line',
+                            lineStyle: {
+                                color: '#FF6B6B',
+                                width: 3,
+                                type: 'solid'
+                            },
+                            itemStyle: {
+                                color: '#FF6B6B'
+                            },
+                            label: {
+                                show: true,
+                                position: 'top',
+                                textStyle: {
+                                    fontSize: 12,
+                                    color: '#333333'
+                                },
+                                formatter: function(params) {
+                                    return params.value + ' 亿日元';
+                                }
+                            }
+
+                        }],
+                        legend: {
+                            data: ['人气指数'],
+                            top: 'bottom',
+                            textStyle: {
+                                color: '#333333'
+                            }
+                        },
+                        backgroundColor: '#FFF9E6',
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '15%',
+                            containLabel: true
+                        }
+
+                    };
+
+                    // 应用配置到图表
+                    myChart.setOption(option);
+
+                    // 监听窗口大小变化，调整图表尺寸
+                    const resizeHandler = function() {
+                        if (myChart) {
+                            myChart.resize();
+                        }
+                    };
+
+                    window.addEventListener('resize', resizeHandler);
+
+                    // 返回销毁函数，用于在页面切换时清理资源
+                    return function destroyChart() {
+                        window.removeEventListener('resize', resizeHandler);
+                        if (myChart) {
+                            myChart.dispose();
+                        }
+                    };
+                }
+            } catch (error) {
+                console.error('初始化ECharts时出错:', error);
+            }
+            return null;
+        }
+
+        // 当前图表的销毁函数
+        let destroyChartFunction = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始加载时初始化图表
+            destroyChartFunction = initECharts();
+
+            // 获取所有导航按钮
+            const navButtons = document.querySelectorAll('.nav-btn');
+
+            // 为导航按钮添加点击事件
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 销毁当前图表实例
+                    if (destroyChartFunction) {
+                        destroyChartFunction();
+                    }
+
+                    // 等待页面切换动画完成后重新初始化图表
+                    setTimeout(() => {
+                        if (this.getAttribute('data-page') === 'influence') {
+                            destroyChartFunction = initECharts();
+                        }
+                    }, 300);
+                });
+            });
+        });
+    </script>
+    <script>
+        // 轮播图脚本 - 修改版
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有轮播图容器
+            const slideshowContainers = document.querySelectorAll('.slideshow-container');
+
+            // 为每个轮播图创建独立的实例
+            slideshowContainers.forEach(container => {
+                const slides = container.querySelectorAll('.slide');
+                if (slides.length > 0) {
+                    let currentSlide = 0;
+                    const slideInterval = 2000; // 2秒切换一次
+
+                    function showSlide(n) {
+                        slides.forEach(slide => slide.classList.remove('active'));
+                        currentSlide = (n + slides.length) % slides.length;
+                        slides[currentSlide].classList.add('active');
+                    }
+
+                    function nextSlide() {
+                        showSlide(currentSlide + 1);
+                    }
+
+                    // 启动轮播
+                    setInterval(nextSlide, slideInterval);
+
+                    // 初始显示第一张
+                    showSlide(0);
+                }
+            });
+        });
+    </script>
+    <script>
+        // 获取用户信息的函数 - 每次调用时都从localStorage获取最新数据
+        function getUserInfo() {
+            return {
+                isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
+                userName: localStorage.getItem('userName') || '蜡笔小新粉丝'
+            };
+        }
+
+        // 更新用户信息显示
+        function updateUserInfoDisplay() {
+            const userInfo = {
+                isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
+                userName: localStorage.getItem('userName') || '蜡笔小新粉丝' // 使用userName作为键名
+            };
+
+            const loginBtn = document.getElementById('login-btn');
+            const userProfile = document.getElementById('user-profile');
+            const userNameEl = document.getElementById('user-name');
+
+            if (userInfo.isLoggedIn) {
+                loginBtn.classList.add('hidden');
+                userProfile.classList.remove('hidden');
+                userNameEl.textContent = userInfo.userName;
+            } else {
+                loginBtn.classList.remove('hidden');
+                userProfile.classList.add('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始更新用户信息
+            updateUserInfoDisplay();
+
+            // 头像点击显示下拉菜单
+            const userAvatar = document.getElementById('user-avatar');
+            const userDropdown = document.getElementById('user-dropdown');
+
+            userAvatar.addEventListener('click', function(e) {
+                e.stopPropagation(); // 阻止事件冒泡到document
+                userDropdown.classList.toggle('hidden');
+            });
+
+            // 点击页面其他区域关闭下拉菜单
+            document.addEventListener('click', function(event) {
+                if (!userProfile.contains(event.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+
+            // 监听storage变化（用于处理同一域名下不同页面的localStorage更新）
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'userName' || e.key === 'isLoggedIn') {
+                    updateUserInfoDisplay();
+                }
+            });
+        });
+
+        // 退出登录功能
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userName');
+            window.location.href = "登录crb.html";
+        }
+    </script>
+</body>
+
+</html>
